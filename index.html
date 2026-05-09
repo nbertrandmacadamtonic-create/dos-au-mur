@@ -1,1 +1,1476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>M.U.R. le dos</title>
 
+<style>
+:root{
+  --dark:#020811;
+  --gold:#f3bf4f;
+  --gold2:#ffd778;
+  --white:#fff8e8;
+
+  --red:#e95b4d;
+  --orange:#f0a94a;
+  --green:#43c987;
+  --blue:#4db7d8;
+  --violet:#8f7cff;
+  --cream:#f5d98a;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  color:var(--white);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+.phone{
+  position:relative;
+  width:min(100vw,430px);
+  height:100dvh;
+  margin:0 auto;
+  overflow:hidden;
+  background:#020811;
+}
+
+/* IMAGE DE FOND ACCUEIL */
+.home-background{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background-image:
+    linear-gradient(180deg,rgba(2,8,17,.08),rgba(2,8,17,.62)),
+    url("./images/fond-accueil.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.home-background::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 48% 44%, rgba(243,191,79,.12), transparent 34%),
+    linear-gradient(90deg,rgba(2,8,17,.06),rgba(2,8,17,.32));
+}
+
+/* INTRO AVEC IMAGE + COLONNE */
+.intro{
+  position:absolute;
+  inset:0;
+  z-index:300;
+  background-image:
+    linear-gradient(180deg,rgba(2,8,17,.12),rgba(2,8,17,.82)),
+    url("./images/fond-intro.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  transition:.7s ease;
+}
+
+.intro.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.04);
+}
+
+.intro-title{
+  position:absolute;
+  top:calc(env(safe-area-inset-top) + 52px);
+  left:24px;
+  right:24px;
+  text-align:center;
+  z-index:4;
+}
+
+.intro-title h1{
+  margin:0;
+  font-size:52px;
+  line-height:.95;
+  letter-spacing:-.06em;
+}
+
+.intro-title .mur{
+  color:white;
+}
+
+.intro-title .dos{
+  color:var(--gold);
+  font-size:30px;
+}
+
+.intro-title p{
+  margin:14px 0 0;
+  color:var(--gold);
+  font-weight:650;
+  letter-spacing:.03em;
+}
+
+/* ANIMATION COLONNE VERTÉBRALE */
+.spine-scene{
+  position:absolute;
+  left:50%;
+  top:52%;
+  width:230px;
+  height:340px;
+  transform:translate(-50%,-50%);
+  perspective:900px;
+  z-index:3;
+  pointer-events:none;
+}
+
+.spine{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  animation:spineRotate 6.5s linear infinite;
+}
+
+@keyframes spineRotate{
+  from{
+    transform:rotateY(0deg) rotateX(5deg);
+  }
+  to{
+    transform:rotateY(360deg) rotateX(5deg);
+  }
+}
+
+.vertebra{
+  position:absolute;
+  left:50%;
+  width:54px;
+  height:30px;
+  margin-left:-27px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,.30), transparent 24%),
+    linear-gradient(135deg, #ffd778, #8a5c1c);
+  box-shadow:
+    0 0 18px rgba(243,191,79,.30),
+    inset 0 0 14px rgba(0,0,0,.20);
+}
+
+.vertebra::before,
+.vertebra::after{
+  content:"";
+  position:absolute;
+  top:9px;
+  width:24px;
+  height:12px;
+  border-radius:20px;
+  background:rgba(243,191,79,.55);
+  box-shadow:0 0 12px rgba(243,191,79,.22);
+}
+
+.vertebra::before{
+  left:-18px;
+  transform:rotate(-18deg);
+}
+
+.vertebra::after{
+  right:-18px;
+  transform:rotate(18deg);
+}
+
+.v1{ top:14px; transform:translateZ(0px) rotateZ(-4deg); }
+.v2{ top:46px; transform:translateZ(14px) rotateZ(5deg); }
+.v3{ top:78px; transform:translateZ(24px) rotateZ(-3deg); }
+.v4{ top:110px; transform:translateZ(18px) rotateZ(5deg); }
+.v5{ top:142px; transform:translateZ(4px) rotateZ(-4deg); }
+.v6{ top:174px; transform:translateZ(-8px) rotateZ(4deg); }
+.v7{ top:206px; transform:translateZ(-18px) rotateZ(-3deg); }
+.v8{ top:238px; transform:translateZ(-10px) rotateZ(4deg); }
+.v9{ top:270px; transform:translateZ(6px) rotateZ(-3deg); }
+
+.spine-glow{
+  position:absolute;
+  inset:20px 20px;
+  border-radius:50%;
+  border:1px solid rgba(243,191,79,.18);
+  box-shadow:0 0 90px rgba(243,191,79,.22);
+  animation:pulseSpine 2.7s ease-in-out infinite;
+}
+
+@keyframes pulseSpine{
+  0%,100%{
+    transform:scale(.94);
+    opacity:.45;
+  }
+  50%{
+    transform:scale(1.08);
+    opacity:.85;
+  }
+}
+
+.enter-btn{
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:calc(env(safe-area-inset-bottom) + 52px);
+  height:70px;
+  border:none;
+  border-radius:999px;
+  color:var(--gold2);
+  font-size:21px;
+  font-weight:720;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.035)),
+    rgba(2,8,17,.82);
+  box-shadow:
+    0 0 0 1px rgba(243,191,79,.72),
+    0 0 28px rgba(243,191,79,.32);
+  z-index:4;
+}
+
+/* PAGES */
+.page{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  padding:
+    calc(env(safe-area-inset-top) + 18px)
+    22px
+    calc(env(safe-area-inset-bottom) + 104px);
+  overflow:auto;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(18px);
+  transition:.35s ease;
+}
+
+.page.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.page::-webkit-scrollbar{
+  display:none;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.icon-btn{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid rgba(243,191,79,.42);
+  background:rgba(2,8,17,.54);
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter:blur(12px);
+}
+
+.profile-btn{
+  position:relative;
+}
+
+.profile-btn::after{
+  content:"";
+  position:absolute;
+  right:4px;
+  top:4px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+}
+
+/* TITRE */
+.brand{
+  margin-top:20px;
+  position:relative;
+  z-index:8;
+}
+
+.brand h1{
+  margin:0;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  line-height:.92;
+}
+
+.brand .mur{
+  font-size:56px;
+  font-weight:850;
+  letter-spacing:-.06em;
+  color:white;
+}
+
+.brand .dos{
+  font-size:28px;
+  font-weight:720;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+
+.brand .baseline{
+  margin-top:10px;
+  color:var(--gold);
+  font-size:16px;
+  font-weight:650;
+}
+
+.brand .sub{
+  margin-top:7px;
+  max-width:300px;
+  color:rgba(255,248,232,.74);
+  font-size:14px;
+  line-height:1.35;
+}
+
+/* MENU CENTRAL */
+.central-menu{
+  position:absolute;
+  left:50%;
+  top:42%;
+  width:280px;
+  height:280px;
+  transform:translate(-50%,-50%);
+  z-index:20;
+}
+
+.central-orb{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:122px;
+  height:122px;
+  transform:translate(-50%,-50%);
+  border:none;
+  border-radius:50%;
+  color:var(--gold2);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,.20), transparent 25%),
+    radial-gradient(circle, rgba(243,191,79,.24), rgba(2,8,17,.95) 64%);
+  border:1px solid rgba(243,191,79,.78);
+  box-shadow:
+    0 0 42px rgba(243,191,79,.42),
+    inset 0 0 28px rgba(243,191,79,.16);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.central-orb strong{
+  font-size:31px;
+  letter-spacing:.12em;
+}
+
+.central-orb small{
+  margin-top:4px;
+  font-size:11px;
+  color:rgba(255,248,232,.70);
+  letter-spacing:.16em;
+}
+
+.orbit-ring{
+  position:absolute;
+  inset:8px;
+  border-radius:50%;
+  border:1px solid rgba(243,191,79,.20);
+}
+
+.orbit-ring::before{
+  content:"";
+  position:absolute;
+  inset:34px;
+  border-radius:50%;
+  border:1px solid rgba(243,191,79,.12);
+}
+
+.home-menu-open .orbit-ring{
+  animation:slowRotate 22s linear infinite;
+}
+
+@keyframes slowRotate{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+.home-item{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:72px;
+  height:72px;
+  margin-left:-36px;
+  margin-top:-36px;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb, var(--accent), white 18%);
+  background:
+    radial-gradient(circle at 35% 22%, rgba(255,255,255,.16), transparent 25%),
+    rgba(2,8,17,.90);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--accent), transparent 62%),
+    inset 0 0 16px rgba(255,255,255,.035);
+  cursor:pointer;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(0,0) scale(.25);
+  transition:.42s cubic-bezier(.2,.9,.2,1.12);
+}
+
+.home-menu-open .home-item{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.home-item svg{
+  width:30px;
+  height:30px;
+}
+
+.home-item img{
+  width:32px;
+  height:32px;
+  object-fit:contain;
+}
+
+.home-item span{
+  position:absolute;
+  top:78px;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:96px;
+  text-align:center;
+  font-size:12px;
+  font-weight:750;
+  color:var(--white);
+  text-shadow:0 0 10px #000;
+}
+
+.home-menu-open .h1{ transform:translate(0,-124px) scale(1); }
+.home-menu-open .h2{ transform:translate(106px,-62px) scale(1); }
+.home-menu-open .h3{ transform:translate(106px,58px) scale(1); }
+.home-menu-open .h4{ transform:translate(0,114px) scale(1); }
+.home-menu-open .h5{ transform:translate(-106px,58px) scale(1); }
+.home-menu-open .h6{ transform:translate(-106px,-62px) scale(1); }
+
+/* CARTES BAS */
+.home-cards{
+  position:absolute;
+  left:22px;
+  right:22px;
+  bottom:calc(env(safe-area-inset-bottom) + 78px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  z-index:18;
+}
+
+.quick-card{
+  min-height:108px;
+  border-radius:24px;
+  padding:11px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.04)),
+    rgba(2,8,17,.78);
+  border:1px solid color-mix(in srgb, var(--accent), white 15%);
+  box-shadow:0 0 24px color-mix(in srgb, var(--accent), transparent 76%);
+  backdrop-filter:blur(18px);
+  overflow:hidden;
+}
+
+.quick-card small{
+  display:block;
+  color:rgba(255,248,232,.60);
+  text-transform:uppercase;
+  letter-spacing:.10em;
+  font-size:9px;
+  font-weight:800;
+}
+
+.quick-card strong{
+  display:block;
+  margin-top:4px;
+  font-size:15px;
+  line-height:1.15;
+}
+
+.quick-card p{
+  margin:4px 0 0;
+  color:rgba(255,248,232,.68);
+  font-size:11px;
+  line-height:1.18;
+}
+
+.weather-mini,
+.exercise-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:9px;
+}
+
+.weather-picto{
+  width:46px;
+  height:46px;
+  border-radius:17px;
+  border:1px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  background:rgba(2,8,17,.58);
+  box-shadow:0 0 18px color-mix(in srgb, var(--accent), transparent 68%);
+  flex:0 0 auto;
+}
+
+/* VIGNETTE EXERCICE */
+.exercise-thumb{
+  width:46px;
+  height:46px;
+  border-radius:17px;
+  border:1px solid rgba(77,183,216,.78);
+  background:
+    linear-gradient(180deg, rgba(2,8,17,.10), rgba(2,8,17,.18)),
+    url("./images/exercice-du-jour.jpg");
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 0 24px rgba(77,183,216,.20);
+  flex:0 0 auto;
+}
+
+/* CARTES DES PAGES */
+.content-card{
+  margin-top:24px;
+  padding:20px;
+  border-radius:30px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03)),
+    rgba(2,8,17,.72);
+  border:1px solid rgba(243,191,79,.22);
+  box-shadow:0 0 28px rgba(243,191,79,.12);
+  backdrop-filter:blur(16px);
+}
+
+.content-card h2{
+  margin:0;
+  color:var(--gold);
+  font-size:26px;
+}
+
+.content-card p{
+  margin:14px 0 0;
+  color:rgba(255,248,232,.74);
+  line-height:1.45;
+}
+
+/* MÉTÉO */
+.weather-box{
+  margin-top:20px;
+  padding:20px;
+  border-radius:28px;
+  border:1px solid var(--weather-color);
+  background:
+    radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--weather-color), transparent 70%), transparent 46%),
+    rgba(2,8,17,.76);
+  box-shadow:0 0 30px color-mix(in srgb, var(--weather-color), transparent 74%);
+}
+
+.weather-display{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.weather-title-block{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.weather-big-picto{
+  width:60px;
+  height:60px;
+  border-radius:22px;
+  border:1px solid var(--weather-color);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  background:rgba(2,8,17,.52);
+}
+
+.weather-display strong{
+  font-size:28px;
+  color:var(--weather-color);
+}
+
+.card-label{
+  color:rgba(255,248,232,.62);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:760;
+}
+
+.weather-score{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  border:1px solid var(--weather-color);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--weather-color);
+  font-size:28px;
+  font-weight:850;
+}
+
+.weather-slider{
+  margin-top:26px;
+}
+
+.weather-slider input{
+  width:100%;
+  accent-color:var(--weather-color);
+}
+
+.weather-labels{
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  color:rgba(255,248,232,.66);
+  font-size:12px;
+  font-weight:650;
+}
+
+/* ZONES DU CORPS */
+.zone-grid{
+  display:grid;
+  gap:14px;
+  margin-top:22px;
+}
+
+.zone-btn{
+  min-height:84px;
+  border-radius:24px;
+  border:1px solid rgba(243,191,79,.45);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03)),
+    rgba(2,8,17,.76);
+  color:var(--white);
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 18px;
+  box-shadow:0 0 22px rgba(243,191,79,.14);
+}
+
+.zone-btn img{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 10px rgba(243,191,79,.75));
+}
+
+.zone-btn strong{
+  display:block;
+  font-size:20px;
+  color:var(--gold2);
+}
+
+.zone-btn span{
+  display:block;
+  margin-top:3px;
+  color:rgba(255,248,232,.66);
+  font-size:13px;
+}
+
+/* PROFIL */
+.form-grid{
+  margin-top:18px;
+  display:grid;
+  gap:14px;
+}
+
+.field{
+  display:grid;
+  gap:7px;
+}
+
+.field label{
+  color:rgba(255,248,232,.72);
+  font-size:13px;
+  font-weight:700;
+}
+
+.field input{
+  width:100%;
+  height:52px;
+  border-radius:18px;
+  border:1px solid rgba(243,191,79,.26);
+  background:rgba(2,8,17,.72);
+  color:var(--white);
+  padding:0 16px;
+  font-size:17px;
+  outline:none;
+}
+
+.field input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 18px rgba(243,191,79,.18);
+}
+
+.bmi-card{
+  margin-top:18px;
+  padding:18px;
+  border-radius:26px;
+  border:1px solid rgba(67,201,135,.42);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(67,201,135,.18), transparent 44%),
+    rgba(2,8,17,.70);
+}
+
+.bmi-card small{
+  color:rgba(255,248,232,.62);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:11px;
+  font-weight:800;
+}
+
+.bmi-value{
+  margin-top:8px;
+  font-size:36px;
+  font-weight:850;
+  color:var(--green);
+}
+
+.bmi-status{
+  margin-top:4px;
+  color:rgba(255,248,232,.76);
+}
+
+/* MENU BAS INTERNE */
+.bottom-dock{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:130px;
+  height:130px;
+  z-index:88;
+  pointer-events:none;
+  opacity:1;
+}
+
+.phone.home-mode .bottom-dock{
+  opacity:0;
+}
+
+.bottom-dock::before{
+  content:"";
+  position:absolute;
+  right:-42px;
+  bottom:-42px;
+  width:154px;
+  height:154px;
+  border-radius:50px 0 0 0;
+  background:
+    radial-gradient(circle at 40% 38%, rgba(243,191,79,.11), rgba(2,8,17,.97) 66%);
+  border-top:1px solid rgba(243,191,79,.22);
+  border-left:1px solid rgba(243,191,79,.18);
+}
+
+.bottom-menu{
+  position:absolute;
+  right:24px;
+  bottom:calc(env(safe-area-inset-bottom) + 20px);
+  width:60px;
+  height:60px;
+  border:none;
+  border-radius:50%;
+  z-index:95;
+  color:var(--gold2);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,.20), transparent 25%),
+    radial-gradient(circle, rgba(243,191,79,.22), rgba(2,8,17,.96) 64%);
+  border:1px solid rgba(243,191,79,.72);
+  box-shadow:0 0 24px rgba(243,191,79,.30);
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.08em;
+  opacity:1;
+  pointer-events:auto;
+}
+
+.phone.home-mode .bottom-menu{
+  opacity:0;
+  pointer-events:none;
+}
+
+.bottom-thread{
+  position:absolute;
+  right:54px;
+  bottom:calc(env(safe-area-inset-bottom) + 74px);
+  width:180px;
+  height:330px;
+  z-index:76;
+  opacity:0;
+  pointer-events:none;
+}
+
+.bottom-thread::before{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:160px;
+  height:325px;
+  border-right:1px solid rgba(243,191,79,.26);
+  border-radius:0 250px 250px 0;
+}
+
+.phone.bottom-open .bottom-thread{
+  opacity:1;
+}
+
+.bottom-nav{
+  position:absolute;
+  right:54px;
+  bottom:calc(env(safe-area-inset-bottom) + 76px);
+  width:1px;
+  height:1px;
+  z-index:90;
+  pointer-events:none;
+}
+
+.bottom-item{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb, var(--accent), white 20%);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.15), transparent 25%),
+    rgba(2,8,17,.94);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 22px color-mix(in srgb, var(--accent), transparent 62%);
+  transform:translate(0,0) scale(.2);
+  opacity:0;
+  transition:.36s cubic-bezier(.2,.9,.2,1.15);
+  pointer-events:none;
+}
+
+.bottom-item svg{
+  width:24px;
+  height:24px;
+}
+
+.bottom-item span{
+  position:absolute;
+  right:64px;
+  top:50%;
+  transform:translateY(-50%);
+  min-width:105px;
+  text-align:right;
+  color:var(--white);
+  font-size:12px;
+  font-weight:750;
+  text-shadow:0 0 10px #000;
+}
+
+.phone.bottom-open .bottom-item{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.phone.bottom-open .b1{ transform:translate(-4px,-286px) scale(1); }
+.phone.bottom-open .b2{ transform:translate(-38px,-232px) scale(1); }
+.phone.bottom-open .b3{ transform:translate(-62px,-176px) scale(1); }
+.phone.bottom-open .b4{ transform:translate(-64px,-118px) scale(1); }
+.phone.bottom-open .b5{ transform:translate(-36px,-60px) scale(1); }
+
+.backdrop{
+  position:absolute;
+  inset:0;
+  z-index:70;
+  background:rgba(2,8,17,.42);
+  backdrop-filter:blur(5px);
+  opacity:0;
+  pointer-events:none;
+}
+
+.phone.bottom-open .backdrop{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* RESPONSIVE */
+@media(max-height:700px){
+  .brand{
+    margin-top:10px;
+  }
+
+  .brand .mur{
+    font-size:42px;
+  }
+
+  .brand .dos{
+    font-size:21px;
+  }
+
+  .brand .baseline{
+    font-size:13px;
+  }
+
+  .brand .sub{
+    display:none;
+  }
+
+  .central-menu{
+    top:39%;
+    transform:translate(-50%,-50%) scale(.78);
+  }
+
+  .home-cards{
+    bottom:calc(env(safe-area-inset-bottom) + 62px);
+    gap:9px;
+  }
+
+  .quick-card{
+    min-height:92px;
+    padding:9px;
+  }
+
+  .quick-card p{
+    display:none;
+  }
+
+  .weather-picto,
+  .exercise-thumb{
+    width:40px;
+    height:40px;
+  }
+
+  .weather-picto{
+    font-size:22px;
+  }
+
+  .spine-scene{
+    transform:translate(-50%,-48%) scale(.82);
+  }
+
+  .intro-title h1{
+    font-size:42px;
+  }
+
+  .intro-title .dos{
+    font-size:24px;
+  }
+}
+
+@media(max-width:370px){
+  .page{
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  .home-cards{
+    left:16px;
+    right:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone home-mode" id="phone">
+
+  <div class="home-background"></div>
+
+  <!-- INTRO -->
+  <section class="intro" id="intro">
+    <div class="intro-title">
+      <h1><span class="mur">M.U.R.</span> <span class="dos">le dos</span></h1>
+      <p>Mesurer · Utiliser · Réguler</p>
+    </div>
+
+    <div class="spine-scene">
+      <div class="spine-glow"></div>
+      <div class="spine">
+        <div class="vertebra v1"></div>
+        <div class="vertebra v2"></div>
+        <div class="vertebra v3"></div>
+        <div class="vertebra v4"></div>
+        <div class="vertebra v5"></div>
+        <div class="vertebra v6"></div>
+        <div class="vertebra v7"></div>
+        <div class="vertebra v8"></div>
+        <div class="vertebra v9"></div>
+      </div>
+    </div>
+
+    <button class="enter-btn" id="enterBtn">Entrer dans M.U.R. le dos</button>
+  </section>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ACCUEIL -->
+  <section class="page active" id="page-home">
+
+    <div class="topbar">
+      <button class="icon-btn" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn profile-btn" data-page="profil" aria-label="Profil">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none">
+          <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="brand">
+      <h1>
+        <span class="mur">M.U.R.</span>
+        <span class="dos">le dos</span>
+      </h1>
+      <div class="baseline">Mesurer · Utiliser · Réguler</div>
+      <div class="sub">Comprendre, soulager et prévenir le mal de dos.</div>
+    </section>
+
+    <div class="central-menu" id="centralMenu">
+      <div class="orbit-ring"></div>
+
+      <button class="central-orb" id="centralOrb">
+        <strong>MUR</strong>
+        <small>DOS</small>
+      </button>
+
+      <button class="home-item h1" style="--accent:var(--green)" data-page="meteo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M5 16a4 4 0 0 1 4-4h1a6 6 0 1 1 5 9H8a4 4 0 0 1-3-5Z" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        <span>Météo</span>
+      </button>
+
+      <button class="home-item h2" style="--accent:var(--gold)" data-page="conseil">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 3v18M7 8h10M8 14h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <span>Conseil</span>
+      </button>
+
+      <button class="home-item h3" style="--accent:var(--blue)" data-page="exercice">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M13 5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM10 21l1-6-3-2 2-3 4 2 2 4 3 1" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        <span>Exercice</span>
+      </button>
+
+      <button class="home-item h4" style="--accent:var(--violet)" data-page="test">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 8v5l3 2M9 2h6M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16Z" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        <span>Test</span>
+      </button>
+
+      <button class="home-item h5" style="--accent:var(--orange)" data-page="zone">
+        <img src="./images/icon-lombaire.png" alt="Zone du corps">
+        <span>Zone</span>
+      </button>
+
+      <button class="home-item h6" style="--accent:var(--cream)" data-page="profil">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        <span>Profil</span>
+      </button>
+    </div>
+
+    <div class="home-cards">
+      <div class="quick-card" style="--accent:var(--green)" data-page="meteo">
+        <small>Météo du dos</small>
+        <div class="weather-mini">
+          <div class="weather-picto" id="homeWeatherIcon">🌤️</div>
+          <div>
+            <strong id="homeWeather">Stable — 72</strong>
+            <p>Tendance du jour.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-card" style="--accent:var(--blue)" data-page="exercice">
+        <small>Exercice du jour</small>
+        <div class="exercise-row">
+          <div class="exercise-thumb"></div>
+          <div>
+            <strong>Dos large</strong>
+            <p>3 min · haut du dos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- METEO -->
+  <section class="page" id="page-meteo">
+    <section class="brand">
+      <h1><span class="mur">Météo</span><span class="dos">du dos</span></h1>
+      <div class="baseline">Mesurer</div>
+      <div class="sub">De la tempête au très beau temps.</div>
+    </section>
+
+    <div class="weather-box" id="weatherBox" style="--weather-color:var(--green)">
+      <div class="weather-display">
+        <div class="weather-title-block">
+          <div class="weather-big-picto" id="weatherIcon">🌤️</div>
+          <div>
+            <div class="card-label">État du jour</div>
+            <strong id="weatherText">Stable</strong>
+          </div>
+        </div>
+        <div class="weather-score" id="weatherScore">72</div>
+      </div>
+
+      <p id="weatherAdvice">
+        Votre dos semble disponible aujourd’hui. Une routine courte suffit pour entretenir la mobilité.
+      </p>
+
+      <div class="weather-slider">
+        <input type="range" id="weatherRange" min="0" max="100" value="72" />
+        <div class="weather-labels">
+          <span>Tempête</span>
+          <span>Variable</span>
+          <span>Très beau temps</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSEIL -->
+  <section class="page" id="page-conseil">
+    <section class="brand">
+      <h1><span class="mur">Conseil</span><span class="dos">du jour</span></h1>
+      <div class="baseline">Réguler</div>
+    </section>
+
+    <div class="content-card">
+      <h2>Changer avant la douleur</h2>
+      <p>Le bon mouvement est souvent celui que l’on fait avant que le dos ne réclame.</p>
+    </div>
+  </section>
+
+  <!-- EXERCICE -->
+  <section class="page" id="page-exercice">
+    <section class="brand">
+      <h1><span class="mur">Exercice</span><span class="dos">du jour</span></h1>
+      <div class="baseline">Utiliser</div>
+    </section>
+
+    <div class="content-card">
+      <h2>Dos large — 3 minutes</h2>
+      <p>Un exercice doux pour retrouver de l’espace entre les omoplates, libérer la respiration et relâcher les tensions du haut du dos.</p>
+    </div>
+  </section>
+
+  <!-- TEST -->
+  <section class="page" id="page-test">
+    <section class="brand">
+      <h1><span class="mur">Test</span><span class="dos">rapide</span></h1>
+      <div class="baseline">Mesurer</div>
+    </section>
+
+    <div class="content-card">
+      <h2>Comment va votre dos ?</h2>
+      <p>Quelques questions simples permettront d’orienter l’utilisateur vers cervicale, dorsale ou lombaire.</p>
+    </div>
+  </section>
+
+  <!-- ZONE -->
+  <section class="page" id="page-zone">
+    <section class="brand">
+      <h1><span class="mur">Zone</span><span class="dos">du corps</span></h1>
+      <div class="baseline">Utiliser</div>
+    </section>
+
+    <div class="zone-grid">
+      <button class="zone-btn">
+        <img src="./images/icon-cervicale.png" alt="Cervicale">
+        <div>
+          <strong>Cervicale</strong>
+          <span>Nuque, tête, haut des épaules</span>
+        </div>
+      </button>
+
+      <button class="zone-btn">
+        <img src="./images/icon-dorsale.png" alt="Dorsale">
+        <div>
+          <strong>Dorsale</strong>
+          <span>Haut du dos, cage thoracique, omoplates</span>
+        </div>
+      </button>
+
+      <button class="zone-btn">
+        <img src="./images/icon-lombaire.png" alt="Lombaire">
+        <div>
+          <strong>Lombaire</strong>
+          <span>Bas du dos, bassin, sacrum</span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <!-- PROFIL -->
+  <section class="page" id="page-profil">
+    <section class="brand">
+      <h1><span class="mur">Profil</span><span class="dos">dos</span></h1>
+      <div class="baseline">Réguler</div>
+      <div class="sub">Vos données personnelles servent à suivre votre évolution.</div>
+    </section>
+
+    <div class="content-card">
+      <h2>Votre profil</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Nom ou prénom</label>
+          <input id="name" type="text" placeholder="Ex. Nicolas" />
+        </div>
+
+        <div class="field">
+          <label for="age">Âge</label>
+          <input id="age" type="number" min="1" max="120" placeholder="Ex. 52" />
+        </div>
+
+        <div class="field">
+          <label for="weight">Poids en kg</label>
+          <input id="weight" type="number" min="1" max="250" step="0.1" placeholder="Ex. 78" />
+        </div>
+
+        <div class="field">
+          <label for="height">Taille en cm</label>
+          <input id="height" type="number" min="80" max="230" step="1" placeholder="Ex. 178" />
+        </div>
+      </div>
+
+      <div class="bmi-card">
+        <small>Indice de masse corporelle</small>
+        <div class="bmi-value" id="bmiValue">--</div>
+        <div class="bmi-status" id="bmiStatus">Renseignez votre poids et votre taille.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bottom-thread"></div>
+
+  <nav class="bottom-nav">
+    <button class="bottom-item b1" style="--accent:var(--gold)" data-page="home">
+      <span>Accueil</span>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 11.5 12 5l8 6.5V20h-5v-6H9v6H4v-8.5Z" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+    </button>
+
+    <button class="bottom-item b2" style="--accent:var(--green)" data-page="meteo">
+      <span>Météo</span>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M5 16a4 4 0 0 1 4-4h1a6 6 0 1 1 5 9H8a4 4 0 0 1-3-5Z" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+    </button>
+
+    <button class="bottom-item b3" style="--accent:var(--blue)" data-page="exercice">
+      <span>Exercice</span>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M13 5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM10 21l1-6-3-2 2-3 4 2 2 4 3 1" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+    </button>
+
+    <button class="bottom-item b4" style="--accent:var(--violet)" data-page="test">
+      <span>Test</span>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 8v5l3 2M9 2h6M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16Z" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+    </button>
+
+    <button class="bottom-item b5" style="--accent:var(--cream)" data-page="profil">
+      <span>Profil</span>
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="bottom-dock"></div>
+  <button class="bottom-menu" id="bottomMenu">MUR</button>
+
+</div>
+
+<script>
+const phone = document.getElementById("phone");
+const intro = document.getElementById("intro");
+const enterBtn = document.getElementById("enterBtn");
+const centralMenu = document.getElementById("centralMenu");
+const centralOrb = document.getElementById("centralOrb");
+const bottomMenu = document.getElementById("bottomMenu");
+const backdrop = document.getElementById("backdrop");
+
+const weatherRange = document.getElementById("weatherRange");
+const weatherBox = document.getElementById("weatherBox");
+const weatherText = document.getElementById("weatherText");
+const weatherScore = document.getElementById("weatherScore");
+const weatherAdvice = document.getElementById("weatherAdvice");
+const weatherIcon = document.getElementById("weatherIcon");
+const homeWeather = document.getElementById("homeWeather");
+const homeWeatherIcon = document.getElementById("homeWeatherIcon");
+
+const weightInput = document.getElementById("weight");
+const heightInput = document.getElementById("height");
+const bmiValue = document.getElementById("bmiValue");
+const bmiStatus = document.getElementById("bmiStatus");
+
+enterBtn.addEventListener("click", () => {
+  intro.classList.add("hidden");
+});
+
+centralOrb.addEventListener("click", () => {
+  centralMenu.classList.toggle("home-menu-open");
+});
+
+function showPage(name){
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const target = document.getElementById("page-" + name);
+  if(target) target.classList.add("active");
+
+  phone.classList.toggle("home-mode", name === "home");
+  phone.classList.remove("bottom-open");
+  centralMenu.classList.remove("home-menu-open");
+}
+
+document.querySelectorAll("[data-page]").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
+
+bottomMenu.addEventListener("click", () => {
+  if(!phone.classList.contains("home-mode")){
+    phone.classList.toggle("bottom-open");
+  }
+});
+
+backdrop.addEventListener("click", () => {
+  phone.classList.remove("bottom-open");
+});
+
+function updateWeather(){
+  const value = Number(weatherRange.value);
+  weatherScore.textContent = value;
+
+  let label, color, advice, icon;
+
+  if(value < 20){
+    label = "Tempête";
+    color = "var(--red)";
+    icon = "⛈️";
+    advice = "Votre dos semble en alerte. Privilégiez un exercice très doux.";
+  } else if(value < 40){
+    label = "Pluie";
+    color = "var(--orange)";
+    icon = "🌧️";
+    advice = "Le dos demande de l’attention. Une courte routine peut aider.";
+  } else if(value < 60){
+    label = "Variable";
+    color = "var(--gold)";
+    icon = "⛅";
+    advice = "Le dos est intermédiaire. Bougez doucement.";
+  } else if(value < 80){
+    label = "Stable";
+    color = "var(--green)";
+    icon = "🌤️";
+    advice = "Votre dos semble disponible. Une routine courte suffit.";
+  } else {
+    label = "Très beau temps";
+    color = "var(--blue)";
+    icon = "☀️";
+    advice = "Le dos semble libre. Bon moment pour renforcer doucement.";
+  }
+
+  weatherText.textContent = label;
+  weatherAdvice.textContent = advice;
+  weatherBox.style.setProperty("--weather-color", color);
+  weatherIcon.textContent = icon;
+  homeWeatherIcon.textContent = icon;
+  homeWeather.textContent = label + " — " + value;
+}
+
+weatherRange.addEventListener("input", updateWeather);
+updateWeather();
+
+function updateBMI(){
+  const weight = Number(weightInput.value);
+  const heightCm = Number(heightInput.value);
+
+  if(!weight || !heightCm){
+    bmiValue.textContent = "--";
+    bmiStatus.textContent = "Renseignez votre poids et votre taille.";
+    return;
+  }
+
+  const heightM = heightCm / 100;
+  const bmi = weight / (heightM * heightM);
+  const rounded = bmi.toFixed(1);
+
+  let status = "";
+
+  if(bmi < 18.5){
+    status = "IMC inférieur à la zone habituelle.";
+  } else if(bmi < 25){
+    status = "IMC dans la zone de référence.";
+  } else if(bmi < 30){
+    status = "IMC au-dessus de la zone de référence.";
+  } else {
+    status = "IMC élevé. À interpréter avec le contexte clinique.";
+  }
+
+  bmiValue.textContent = rounded;
+  bmiStatus.textContent = status;
+}
+
+weightInput.addEventListener("input", updateBMI);
+heightInput.addEventListener("input", updateBMI);
+</script>
+
+</body>
+</html>
